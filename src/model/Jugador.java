@@ -11,6 +11,7 @@ public class Jugador {
     private int rebote;
     private int asistencias;
     private String posicion;
+    private Equipo equipo;
 
     public Jugador() {
     }
@@ -21,12 +22,13 @@ public class Jugador {
         this.nacimiento = nacimiento;
         this.posicion = posicion;
     }
-    public Jugador(int id,String nombre, LocalDate nacimiento, int canastas, int rebote, int asistencias, String posicion) {
+    public Jugador(int id,String nombre, LocalDate nacimiento, int canastas, int rebote, int asistencias, String posicion,Equipo equipo) {
         this(id,nombre, nacimiento,posicion);
         this.canastas = canastas;
         this.rebote = rebote;
         this.asistencias = asistencias;
         this.posicion = posicion;
+        this.equipo = equipo;
     }
 
 
@@ -83,5 +85,24 @@ public class Jugador {
         return id;
     }
 
+    public Equipo getEquipo() {
+        return equipo;
+    }
 
+    public void setEquipo(Equipo equipo) {
+        this.equipo = equipo;
+    }
+
+    @Override
+    public String toString() {
+        return "Jugador{" +
+                "nombre='" + nombre + '\'' +
+                ", nacimiento=" + nacimiento +
+                ", canastas=" + canastas +
+                ", rebote=" + rebote +
+                ", asistencias=" + asistencias +
+                ", posicion='" + posicion + '\'' +
+                ", equipo=" + equipo +
+                '}';
+    }
 }
