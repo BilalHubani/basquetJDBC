@@ -154,24 +154,17 @@ public class JDBC {
         ResultSet rs = st.executeQuery(query);
         return llenarListJugadores(rs);
     }
-    public Map<String, Double> agruparJugadoresDevolverEstadisticas() throws SQLException{
-        Map<String, Double> resultado = new HashMap<>();
+    public List<String> agruparJugadoresDevolverEstadisticas() throws SQLException{
+        List<String> resultado = new ArrayList<>();
         String query = "select position, max(nbaskets) as 'max1', min(nbaskets) as 'min1', avg(nbaskets) as 'avg1', max(nassists) as 'max2', min(nassists) as 'min2', avg(nassists) as 'avg2', max(nrebounds) as 'max3', min(nrebounds) as 'min3', avg(nrebounds) as 'avg3' from player group by position;";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
-        while(rs.next()){
+            while(rs.next()){
+                resultado.add("\n"+rs.getString("position")+": máximo canastas "+rs.getInt("max1")+ ", mínimo canastas "+rs.getInt("min1")+" y AVG canastas "+rs.getDouble("avg1")+
+                        "\n"+": máximo asistencias "+rs.getInt("max2")+ ", mínimo asistencias "+rs.getInt("min2")+" y AVG asistencias "+rs.getDouble("avg2")+
+                        "\n"+": máximo rebotes "+rs.getInt("max3")+ ", mínimo rebotes "+rs.getInt("min3")+"y AVG rebotes "+rs.getDouble("avg3"));
+            }
 
-            resultado.put(rs.getString("position"),null);
-            resultado.put("Max canastas",rs.getDouble("max1"));
-            resultado.put("Min canastas",rs.getDouble("min1"));
-            resultado.put("Avg canastas",rs.getDouble("avg1"));
-            resultado.put("Max asistencias",rs.getDouble("max2"));
-            resultado.put("Min asistencias",rs.getDouble("min2"));
-            resultado.put("Avg asistencias",rs.getDouble("avg2"));
-            resultado.put("Max rebotes",rs.getDouble("max3"));
-            resultado.put("Min rebotes",rs.getDouble("min3"));
-            resultado.put("Avg rebotes",rs.getDouble("avg3"));
-        }
         return resultado;
     }
     public List<String> devolverRanking() throws SQLException{

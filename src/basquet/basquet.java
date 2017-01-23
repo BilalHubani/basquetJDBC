@@ -99,8 +99,8 @@ public class basquet {
             }
             System.out.println("");
             System.out.println("Devolver max, min y avg de canastas, asistencias y rebotes agrupados por posición");
-            Map<String,Double> maps = gestor.agruparJugadoresDevolverEstadisticas();
-            System.out.println(maps);
+            List<String> lista = gestor.agruparJugadoresDevolverEstadisticas();
+            System.out.println(lista);
             System.out.println("");
             System.out.println("Devolver ranking por número de canastas");
             List<String> strings = gestor.devolverRanking();
