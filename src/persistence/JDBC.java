@@ -124,35 +124,50 @@ public class JDBC {
         String query = "select * from player where name LIKE '%"+name+"%';";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
-        return llenarListJugadores(rs);
+        jugadores = llenarListJugadores(rs);
+        rs.close();
+        st.close();
+        return jugadores;
     }
     public List<Jugador> devolverCanastas(int baskets) throws SQLException{
         List<Jugador> jugadores = new ArrayList<>();
         String query = "select * from player where nbaskets>="+baskets+";";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
-        return llenarListJugadores(rs);
+        jugadores = llenarListJugadores(rs);
+        rs.close();
+        st.close();
+        return jugadores;
     }
     public List<Jugador> devolverAsistencias(int assists1, int assists2) throws SQLException{
         List<Jugador> jugadores = new ArrayList<>();
         String query = "select * from player where nassists>="+assists1+" && nassists<="+assists2+";";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
-        return llenarListJugadores(rs);
+        jugadores = llenarListJugadores(rs);
+        rs.close();
+        st.close();
+        return jugadores;
     }
     public List<Jugador> devolverPosicion(String position) throws SQLException{
         List<Jugador> jugadores = new ArrayList<>();
         String query = "select * from player where position='"+position+"';";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
-        return llenarListJugadores(rs);
+        jugadores = llenarListJugadores(rs);
+        rs.close();
+        st.close();
+        return jugadores;
     }
     public List<Jugador> devolverJugadoresNacidosAntesDe(LocalDate fecha) throws SQLException{
         List<Jugador> jugadores = new ArrayList<>();
         String query = "select * from player where birth<'"+java.sql.Date.valueOf(fecha)+"';";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
-        return llenarListJugadores(rs);
+        jugadores = llenarListJugadores(rs);
+        rs.close();
+        st.close();
+        return jugadores;
     }
     public List<String> agruparJugadoresDevolverEstadisticas() throws SQLException{
         List<String> resultado = new ArrayList<>();
@@ -164,7 +179,8 @@ public class JDBC {
                         "\n"+": máximo asistencias "+rs.getInt("max2")+ ", mínimo asistencias "+rs.getInt("min2")+" y AVG asistencias "+rs.getDouble("avg2")+
                         "\n"+": máximo rebotes "+rs.getInt("max3")+ ", mínimo rebotes "+rs.getInt("min3")+"y AVG rebotes "+rs.getDouble("avg3"));
             }
-
+        st.close();
+            rs.close();
         return resultado;
     }
     public List<String> devolverRanking() throws SQLException{
@@ -177,6 +193,8 @@ public class JDBC {
             ranking.add(num+" "+rs.getString("name")+" "+rs.getInt("nbaskets"));
             num++;
         }
+        st.close();
+        rs.close();
         return ranking;
     }
     public int devolverRankingPorPosicion(String nombre) throws SQLException{
@@ -204,6 +222,8 @@ public class JDBC {
             equipo.setFecha(rs.getDate("creation").toLocalDate());
             equipos.add(equipo);
         }
+        st.close();
+        rs.close();
         return equipos;
     }
     public List<Jugador> devolverJugadoresEquipo(String equipo) throws SQLException{
@@ -211,14 +231,20 @@ public class JDBC {
         String query = "select * from player where team='"+equipo+"';";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
-        return llenarListJugadores(rs);
+        jugadores = llenarListJugadores(rs);
+        rs.close();
+        st.close();
+        return jugadores;
     }
     public List<Jugador> devolverPosicionJugadoresEquipo(String equipo, String posicion) throws SQLException{
         List<Jugador> jugadores = new ArrayList<>();
         String query = "select * from player where team='"+equipo+"' and position='"+posicion+"';";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
-        return llenarListJugadores(rs);
+        jugadores = llenarListJugadores(rs);
+        rs.close();
+        st.close();
+        return jugadores;
     }
     public Jugador devolverJugadorMasCanastasEquipo(String equipo) throws SQLException{
         Jugador jugador = new Jugador();
@@ -236,6 +262,8 @@ public class JDBC {
             equipo2.setNombre(rs.getString("team"));
             jugador.setEquipo(equipo2);
         }
+        rs.close();
+        st.close();
         return jugador;
     }
     public void eliminarJugadores() throws SQLException{
